@@ -2,7 +2,8 @@
 Main Orchestrator - Coordinates the email agent tasks.
 """
 
-from app import gmail_service, email_classifier, task_extractor, todo_manager, reporter
+import gmail_service, email_classifier, task_extractor, todo_manager, reporter
+from gmail_service import fetch_emails
 
 def run_agent():
     # Authenticate with Gmail
@@ -34,4 +35,4 @@ def run_agent():
     gmail_service.send_summary_email(summary)
 
 if __name__ == "__main__":
-    run_agent()
+    fetch_emails()
