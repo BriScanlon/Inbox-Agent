@@ -22,18 +22,18 @@ As a busy user, I want an AI-powered email agent that organizes my Gmail inbox a
     - Number of to-dos created.
 
 ## 🚀 Task Breakdown
-| Task # | Description                                                           | Priority | Dependency           |
-|--------|------------------------------------------------------------------------|----------|----------------------|
-| 1      | Set up OAuth2 Gmail connection and token handling                      | High     | None                 |
-| 2      | Fetch inbox emails via Gmail API                                       | High     | Task 1               |
-| 3      | Detect marketing emails (look for unsubscribe links, keywords)         | High     | Task 2               |
-| 4      | Move marketing emails to “Marketing” folder (create if needed)         | High     | Task 3               |
-| 5      | Extract tasks/questions from email body using Ollama API               | High     | Task 2               |
-| 6      | Store To-Do items locally (JSON or SQLite)                             | Medium   | Task 5               |
-| 7      | Generate daily email summary                                           | Medium   | Tasks 2, 3, 5, 6     |
-| 8      | Send summary email via Gmail API                                       | Medium   | Task 7               |
-| 9      | Automate daily run (via cron or scheduler)                             | Medium   | Tasks 7, 8           |
-| 10     | Dockerize the app with `.env` config support                           | High     | Tasks 1-9 (for prod) |
+| Task # | Description                                                           | Priority | Dependency           | Status |
+|--------|------------------------------------------------------------------------|----------|----------------------|--------|
+| 1      | Set up OAuth2 Gmail connection and token handling                      | High     | None                 | Done    |
+| 2      | Fetch inbox emails via Gmail API                                       | High     | Task 1               |        |
+| 3      | Detect marketing emails (look for unsubscribe links, keywords)         | High     | Task 2               |        |
+| 4      | Move marketing emails to “Marketing” folder (create if needed)         | High     | Task 3               |        |
+| 5      | Extract tasks/questions from email body using Ollama API               | High     | Task 2               |        |
+| 6      | Store To-Do items locally (JSON or SQLite)                             | Medium   | Task 5               |        |
+| 7      | Generate daily email summary                                           | Medium   | Tasks 2, 3, 5, 6     |        |
+| 8      | Send summary email via Gmail API                                       | Medium   | Task 7               |        |
+| 9      | Automate daily run (via cron or scheduler)                             | Medium   | Tasks 7, 8           |        |
+| 10     | Dockerize the app with `.env` config support                           | High     | Tasks 1-9 (for prod) |        |
 
 ## 📝 Development Plan
 1. Build local proof-of-concept covering core email flow (Tasks 1-6).
