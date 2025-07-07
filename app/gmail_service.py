@@ -36,9 +36,46 @@ def authenticate_gmail():
     pass
 
 
+def get_or_create_label(label_name="AI Processed"):
+    """Gets the Gmail label ID for the given name, creating it if it doesn't exist."""
+    service = load_gmail_service()
+    labels = service.users().labels().list(userId="me").execute().get("labels", [])
+
+    # Check if label exists
+    for label in labels:
+        if label["name"].lower() == label_name.lower():
+            print(f"Found existing label: {label_name}")
+            return label["id"]
+
+    # If not found, create it
+    label_body = {
+        "name": label_name,
+        "labelListVisibility": "labelShow",
+        "messageListVisibility": "show",
+    }
+
+    new_label = service.users().labels().create(userId="me", body=label_body).execute()
+    print(f"Created new label: {label_name}")
+    return new_label["id"]
+
+
+def apply_label_to_email(message_id, label_id):
+    """Applies the specified label to the given email."""
+    service = load_gmail_service()
+    body = {
+        "addLabelIds": [label_id],
+        "removeLabelIds": [],
+    }
+
+    service.users().messages().modify(userId="me", id=message_id, body=body).execute()
+
+    print(f"✅ Applied label to email ID: {message_id}")
+
+
 def fetch_emails(max_results=5):
     """Fetches recent emails and prints basic info (From, Subject)."""
     service = load_gmail_service()
+    label_id = get_or_create_label("AI Processed")
 
     # Fetch latest emails (list message IDs)
     results = (
@@ -74,8 +111,9 @@ def fetch_emails(max_results=5):
             (h["value"] for h in headers if h["name"] == "From"), "(Unknown Sender)"
         )
 
-        print(f"📧 From: {sender}")
-        print(f"   Subject: {subject}\n")
+        print(f"From: {sender}")
+        print(f"Subject: {subject}\n")
+        apply_label_to_email(msg_id, label_id)
 
 
 def move_to_marketing_folder(email_id):
